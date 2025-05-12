@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Demo Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f5f5f5;
+    }
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      display: block;
+      margin-bottom: 10px;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    input:focus {
+      border-color: dodgerblue;
+      outline: none;
+    }
+    #welcomeMessage {
+      font-size: 18px;
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      border-color: red;
+    }
+    .btn {
+      background-color: dodgerblue;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: deepskyblue;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>User Registration</h2>
+  <form id="userForm">
+    <input type="text" id="name" placeholder="Enter your name" />
+    <input type="email" id="email" placeholder="Enter your email" />
+    <button type="submit" class="btn">Submit</button>
+  </form>
+
+  <div id="welcomeMessage"></div>
+
+  <script>
+    const form = document.getElementById('userForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form from submitting
+
+      // Reset error styles
+      nameInput.classList.remove('error');
+      emailInput.classList.remove('error');
+      welcomeMessage.textContent = '';
+
+      // Basic validation
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      let valid = true;
+
+      if (name === '') {
+        nameInput.classList.add('error');
+        valid = false;
+      }
+
+      if (email === '' || !validateEmail(email)) {
+        emailInput.classList.add('error');
+        valid = false;
+      }
+
+      if (valid) {
+        welcomeMessage.textContent = `Welcome, ${name}! 🎉`;
+        form.reset();
+      } else {
+        welcomeMessage.textContent = 'Please fill in all fields correctly.';
+        welcomeMessage.style.color = 'red';
+      }
+    });
+
+    // Helper function to validate email format
+    function validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+  </script>
+
+</body>
+</html>
